@@ -1,319 +1,488 @@
-<!-- @template name="Landing" description="A one-page product landing in the system's own voice — an invented product (Takt: Swiss-clockwork timetables), a ruled hero, stat row, feature rows, a grayscale photograph and a red poster close" -->
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Modernist — landing</title>
-<script src="./ds-base.js"></script>
-<style>
-/* Template scaffolding — page layout and web-scale sizing only; every color,
-   font, radius and shadow comes from ../../styles.css. The voice is the
-   deck's, re-derived for a scrolling page: the grid SHOWS — 2px
-   rules draw the structure — red is spent as a mark, and its one field
-   moment is the poster close (the deck's divider logic: the red page sets
-   nothing small).
-
-   THE RHYTHM: a 28px leading unit (17px Archivo body at ~1.65), 14px
-   half-step; line-heights and block margins in unit multiples, heads
-   cap-trimmed, ?baselines/B to review. The deck's seat-pinning relaxes to
-   per-block discipline on a fluid page. The system's own interface
-   components (nav, buttons, inputs) keep their styles.css leading — the
-   rhythm governs the page's text, not the controls.
-
-   THE LANDING LAWS (shared by all six systems' landing templates):
-   #1 display headers break per sentence (.line spans); #2 the landing
-   advertises an invented product played straight — modernist's is Takt,
-   timetables that run like Switzerland; #3 spacing is cluster-scoped
-   (display leading ratio-governed ≈1.06 for Archivo's tight caps — the
-   display-block lattice exemption — tight single-unit gaps inside a text
-   cluster, the air between sections); #4 no hero eyebrow — the nav brand
-   names the product.
-
-   Optical left alignment: the deck's measured Archivo 800 value carries
-   verbatim (-0.058em where caps lead a display line; em-scaled). */
-:root {
-  --leading: 28px;
-  --half: 14px;
-  --edge: clamp(20px, 5vw, 72px);
-  --measure: 58ch;
-}
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; text-wrap: pretty; }
-.wrap { max-width: 1200px; margin: 0 auto; padding: 0 var(--edge); }
-/* the component demo pads the masthead with its own spacing; on the page the
-   masthead's contents take the page gutter and sit on the wrap's text axis
-   (padding-only — full-width paint such as a masthead rule is untouched) */
-.nav { padding-inline: max(var(--edge), calc((100% - 1200px) / 2 + var(--edge))); }
-.nav a { white-space: nowrap; }
-.nav a[aria-current='location'] { color: var(--color-accent); } /* in-page anchor, not
-   a page link — 'location' is the truthful value; carry the component's active ink */
-@media (max-width: 480px) { .nav a { display: none; } } /* phone width: the nav
-   keeps brand + the one action (layout-only — the component's look is
-   untouched); the full link row's min-content crosses narrow-phone widths */
-
-/* — drawn structure: the 2px rule is the section seam (the deck's header
-   band as page grammar; rules span the content column, solid — this system
-   does not fade its rules) — */
-.rule2 { height: 2px; border: 0; margin: 0; background: var(--color-divider); }
-
-/* — kicker (deck grammar: uppercase, tabular, accent; no hanging dash —
-   modernist marks are squares, and they belong to lists, not labels) — */
-.kicker {
-  display: block; font-size: 13px; line-height: var(--half);
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--color-accent-700); /* accent-colored SMALL text takes the deep step —
-     6.4:1, where the base accent measures 3.8:1 (a large-text value; the
-     deck's kickers are 24px, this one is 13px) */
-  font-feature-settings: "tnum" 1;
-  margin: 0 0 calc(var(--leading) - var(--half));
-}
-
-/* — hero — */
-.hero { padding: calc(4 * var(--leading)) 0 calc(3 * var(--leading)); }
-.display {
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: clamp(42px, 6.2vw, 84px);
-  line-height: clamp(44.5px, 6.57vw, 89px); /* law #3: ratio-governed ≈1.06 —
-     Archivo's 800 sits tight and all-cap-height; the display-block lattice
-     exemption (no 14px step is both tighter than the old look and clear) */
-  letter-spacing: -0.02em; margin: 0;
-  margin-left: -0.058em; /* optical left alignment — the deck's measured Archivo 800 value */
-  text-box: trim-both cap alphabetic;
-}
-.display .line { display: block; } /* law #1: one sentence per line */
-.hero .sub { font-size: 17px; line-height: var(--leading); max-width: var(--measure);
-  margin: calc(1.5 * var(--leading) - 1cap) 0 0;
-  text-box: trim-both cap alphabetic; } /* 1.5 units: clears the display's descenders with cluster-tight air (law #3) */
-.hero .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--leading); }
-
-/* — stat row (in-grammar: red stays a MARK on the light ground — the stat
-   numerals take the accent at display size, ≥3:1 as large text per the
-   system's own accent rule; the red FIELD is reserved for the close) — */
-.stats { padding: calc(2.5 * var(--leading)) 0; }
-.stats .grid { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: calc(1.5 * var(--leading)) var(--leading); }
-.stat-num { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: clamp(34px, 3.4vw, 48px); line-height: calc(2 * var(--leading));
-  color: var(--color-accent); /* display figures stay proportional — the deck's figure policy */
-  margin: 0; margin-left: -0.045em; /* digits lead — the deck's "0"-population value */
-  text-box: trim-both cap alphabetic; }
-.stat-label { font-size: 13px; line-height: var(--half); letter-spacing: 0.08em; text-transform: uppercase;
-  color: color-mix(in srgb, var(--color-text) 70%, transparent); /* small-text ink on the
-     light ground: 70% measures 5.8:1 (the deck's 55% furniture mix is a
-     24px large-text convention — at 13px the 4.5:1 bar applies, and 55%
-     measures only 3.7:1 here) */
-  margin: var(--half) 0 0; }
-
-/* — feature rows (the deck's ruled-toc grammar: 2px rules ON the seams,
-   red square marks hanging at the numbers — drawn structure, no cards) — */
-.features { padding: calc(3 * var(--leading)) 0 calc(2.5 * var(--leading)); }
-.feature { display: grid; grid-template-columns: minmax(64px, 160px) minmax(0, 420px) minmax(0, 1fr);
-  gap: var(--leading) clamp(24px, 4vw, 72px); align-items: baseline;
-  padding: calc(1.5 * var(--leading)) 0; }
-.feature + .feature { border-top: 2px solid var(--color-divider); } /* the ruled seam — solid, the system's weight */
-.f-num { position: relative; font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 15px; line-height: var(--leading); color: var(--color-text);
-  font-feature-settings: "tnum" 1; margin: 0; text-box: trim-both cap alphabetic; }
-.f-num::before { content: ""; position: absolute; left: -24px; top: calc(0.5cap - 5px);
-  width: 10px; height: 10px; background: var(--color-accent); } /* the deck's 10px red square,
-     hanging left of the number's axis — at narrow widths the gutter folds it away */
-@media (max-width: 1280px) { .f-num::before { display: none; } }
-.f-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 24px; line-height: var(--leading); letter-spacing: -0.01em;
-  margin: 0; text-box: trim-both cap alphabetic; }
-.f-copy { font-size: 15.5px; line-height: var(--leading); margin: 0;
-  color: color-mix(in srgb, var(--color-text) 78%, transparent);
-  max-width: 52ch; text-box: trim-both cap alphabetic; }
-
-/* — imagery split (grayscale photograph — the system prints in black and
-   white; the box pins the bundled asset's 951×665 ratio so swaps
-   cover-crop into the same frame) — */
-.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--leading) clamp(24px, 5vw, 96px); align-items: center;
-  padding: calc(2 * var(--leading)) 0 calc(3 * var(--leading)); }
-.split-title { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: 32px; line-height: calc(1.5 * var(--leading)); letter-spacing: -0.015em;
-  margin: 0; text-box: trim-both cap alphabetic; }
-.split-copy .note { font-size: 15.5px; line-height: var(--leading);
-  color: color-mix(in srgb, var(--color-text) 78%, transparent);
-  margin: calc(var(--leading) - 1cap) 0 0; max-width: 48ch; text-box: trim-both cap alphabetic; }
-.split-figure { margin: 0; }
-.split-figure image-slot { width: 100%; aspect-ratio: 951 / 665; }
-
-/* — quote (hanging punctuation, the deck's measured Archivo advances) — */
-.quote { padding: calc(2.5 * var(--leading)) 0 calc(3.5 * var(--leading)); }
-.quote blockquote {
-  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: clamp(24px, 2.6vw, 34px); line-height: calc(1.5 * var(--leading));
-  letter-spacing: -0.015em; max-width: 32ch; margin: 0;
-  text-indent: -0.496em; /* hang the opening “ (the deck's measured advance in the 800) */
-  text-box: trim-both cap alphabetic;
-}
-.quote figcaption { font-size: 15.5px; line-height: var(--leading);
-  color: color-mix(in srgb, var(--color-text) 70%, transparent); /* 5.8:1 — see .stat-label */
-  margin: calc(2 * var(--leading) - 1cap) 0 0; /* two grid units below the quote's
-     last baseline — one reads as part of the quote block; the attribution needs air */
-  text-indent: -1.209em; /* hang the leading em-dash + space (measured in the Regular) */
-  text-box: trim-both cap alphabetic; }
-
-@media (max-width: 720px) {
-  /* the phone gutter (--edge bottoms out at 20px) is narrower than the hung
-     marks' measured advances, so a hung “ or em-dash would press into or past
-     the viewport edge — seat the quote flush below this width; the hang
-     returns with the wider gutter */
-  .quote blockquote, .quote figcaption { text-indent: 0; }
-}
-
-/* — the red poster close (the deck's divider logic: the accent's one field
-   moment, type reversed to the paper token). COPY on the red is
-   display-grade only — paper display type measures 3.8:1, the deck
-   dividers' own derivation. The one small element is the ghost button, a
-   CONTROL: paper-on-red measures the same 3.8:1, which meets the system's
-   documented interface-chrome bar (the readme tunes the accent pair to at
-   least 3:1 — "enough for icons, large text and interface chrome, not for
-   body copy") — the same bar the system's own accent-filled primary button
-   label rides everywhere. */
-.close { background: var(--color-accent); color: var(--color-bg); }
-.close .wrap { padding-top: calc(3 * var(--leading)); padding-bottom: calc(3 * var(--leading)); }
-.close h3 { font-family: var(--font-heading); font-weight: var(--font-heading-weight);
-  font-size: clamp(34px, 4.2vw, 56px); line-height: clamp(36px, 4.45vw, 59.4px); /* ≈1.06 —
-     display-grade, so it carries the display-block lattice exemption (the
-     rhythm probe excludes .display and .close h3 alike) */
-  letter-spacing: -0.015em; margin: 0; margin-left: -0.058em;
-  text-box: trim-both cap alphabetic; }
-.close h3 .line { display: block; }
-.close .row { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: calc(1.5 * var(--leading)); }
-.close .btn-ghost { color: var(--color-bg); border-color: var(--color-bg); } /* paper outline on the red field */
-footer { padding: calc(2 * var(--leading)) 0; font-size: 13px; line-height: var(--leading);
-  color: color-mix(in srgb, var(--color-text) 70%, transparent); /* 5.8:1 — see .stat-label */ }
-
-/* — responsive collapse — */
-/* the feature grid's fixed-max columns (160 + 420 + gaps) crush the copy
-   column in the tablet band, so it collapses earlier than the page */
-@media (max-width: 880px) {
-  .feature { grid-template-columns: 1fr; gap: var(--half); }
-  .f-copy { max-width: var(--measure); }
-}
-@media (max-width: 720px) {
-  .hero { padding-top: calc(2.5 * var(--leading)); }
-  .stats .grid { grid-template-columns: repeat(2, 1fr); justify-content: start; }
-  .split { grid-template-columns: 1fr; }
-  .split-figure { order: -1; }
-}
-
-/* Review aid: the 28px rhythm drawn as hairlines — debug chrome, toggled by
-   ?baselines or the B key, never part of the look. */
-body[data-baselines] { position: relative; }
-body[data-baselines]::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background:
-    repeating-linear-gradient(to bottom,
-      color-mix(in srgb, var(--color-accent) 35%, transparent) 0 1px,
-      transparent 1px var(--leading)),
-    repeating-linear-gradient(to bottom,
-      transparent 0 var(--half),
-      color-mix(in srgb, var(--color-accent) 16%, transparent) var(--half) calc(var(--half) + 1px),
-      transparent calc(var(--half) + 1px) var(--leading));
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-<nav class="nav">
-  <span class="nav-brand">Takt</span>
-  <a href="#product" aria-current="location">Product</a>
-  <a href="#network">Network</a>
-  <a href="#start">Start</a>
-  <button type="button" class="btn btn-primary">Get started</button>
-</nav>
-<div class="wrap">
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&amp;family=Outfit:wght@500;600;700;800;900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin:0; background:#ffffff; color:#1b2233; font-family:'Plus Jakarta Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#0e7490; text-decoration:none; }
+  a:hover { color:#a21caf; }
+  ::selection { background:#7c3aed; color:#fff; }
+  input, select, button { font-family:inherit; }
+  @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+  @keyframes floaty2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(12px)} }
+  @keyframes breathe { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:.85;transform:scale(1.06)} }
+  @keyframes orbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  @keyframes sweep { 0%{transform:translateX(-120%)} 60%,100%{transform:translateX(220%)} }
+  @keyframes zeReveal { from{opacity:0;transform:translateY(26px) scale(.985);filter:blur(7px)} to{opacity:1;transform:none;filter:blur(0)} }
+  @keyframes zeDrop { from{opacity:0;transform:translateY(-16px) scale(.9)} to{opacity:1;transform:none} }
+  @keyframes zeBgSettle { from{opacity:0;transform:scale(1.12)} to{opacity:1;transform:scale(1)} }
+  @keyframes zePop { 0%{opacity:0;transform:translateY(8px) scale(.78)} 70%{opacity:1;transform:scale(1.07)} 100%{opacity:1;transform:scale(1)} }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.001ms !important; animation-delay:0ms !important; transition-duration:.001ms !important } }
+  @keyframes pulsering { 0%{transform:scale(.9);opacity:.7} 100%{transform:scale(1.7);opacity:0} }
 
-  <section class="hero">
-    <h1 class="display"><span class="line">The 7:02 leaves at 7:02.</span> <span class="line">Plan on it.</span></h1>
-    <p class="sub">Takt is timetable infrastructure for people who run things: clockface scheduling, guaranteed connections, and disruption plans that are ready before the disruption is. Built like a Swiss railway, because it is one.</p>
-    <div class="row">
-      <button type="button" class="btn btn-primary">Start scheduling</button>
-      <button type="button" class="btn btn-ghost">Read the timetable</button>
+  @media (max-width: 960px) {
+    .nav-links { display:none !important; }
+    .hero-grid { grid-template-columns:1fr !important; padding:56px 24px 36px !important; gap:34px !important; text-align:center !important; }
+    .hero-grid .hero-copy { margin:0 auto; }
+    .hero-grid .hero-badges { justify-content:center !important; }
+    .hero-grid .hero-visual { max-width:380px; margin:0 auto; }
+    .hero-search { max-width:520px; margin-left:auto !important; margin-right:auto !important; }
+    .benefits-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .plans-grid { grid-template-columns:1fr !important; max-width:440px !important; margin-left:auto !important; margin-right:auto !important; }
+    .plan-popular { margin-top:26px !important; }
+    .steps-grid { grid-template-columns:1fr !important; gap:44px !important; }
+    .steps-line { display:none !important; }
+    .ahorro-grid { grid-template-columns:1fr !important; gap:40px !important; }
+    .footer-grid { grid-template-columns:1fr 1fr !important; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding-left:20px !important; padding-right:20px !important; }
+    .site-nav { padding:14px 18px !important; gap:14px !important; }
+    .benefits-grid { grid-template-columns:1fr !important; }
+    .pasos-cta { flex-direction:column !important; text-align:center !important; gap:16px !important; }
+    .pasos-cta a { font-size:22px !important; }
+    .final-cta { flex-direction:column !important; text-align:center !important; padding:34px 26px !important; }
+    .final-cta a[href^="tel"] { width:100% !important; justify-content:center !important; }
+    .hero-search { flex-direction:column !important; border-radius:20px !important; padding:14px !important; }
+    .hero-search input { width:100% !important; text-align:center !important; padding:6px 0 !important; }
+    .hero-search button { width:100% !important; justify-content:center !important; }
+    .footer-grid { grid-template-columns:1fr !important; text-align:center !important; }
+    .footer-grid > div { margin:0 auto; }
+    .footer-bottom { flex-direction:column !important; text-align:center !important; gap:8px !important; }
+  }
+
+  @media (max-width: 420px) {
+    .site-nav img { height:36px !important; }
+    .nav-cta { padding:9px 14px !important; font-size:10.5px !important; gap:6px !important; }
+  }
+</style>
+</helmet>
+
+<div style="position:relative;overflow:hidden">
+
+  <div style="position:absolute;top:-260px;left:-180px;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.16),transparent 62%);filter:blur(30px);pointer-events:none;animation:breathe 11s ease-in-out infinite"></div>
+  <div style="position:absolute;top:180px;right:-220px;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.14),transparent 62%);filter:blur(30px);pointer-events:none;animation:breathe 14s ease-in-out infinite 1.5s"></div>
+
+  <header style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(255,255,255,.82);border-bottom:1px solid rgba(15,23,42,.08)">
+    <nav class="site-nav" style="max-width:1240px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="#top" style="display:flex;align-items:center;flex:none">
+        <img src="uploads/pasted-1785974510057-0.png" alt="Connecting" style="animation:zeDrop .9s cubic-bezier(.16,1,.3,1) .1s both;height:44px;width:auto;display:block;filter:drop-shadow(0 4px 12px rgba(37,99,235,.16))">
+      </a>
+      <div class="nav-links" style="animation:zeReveal .9s cubic-bezier(.16,1,.3,1) .26s both;display:flex;align-items:center;gap:30px;font-size:14px;font-weight:500;color:#4b5a75">
+        <a href="#planes" style="color:inherit" style-hover="color:#0f172a">Planes</a>
+        <a href="#proveedores" style="color:inherit" style-hover="color:#0f172a">Proveedores</a>
+        <a href="#pasos" style="color:inherit" style-hover="color:#0f172a">Cómo Funciona</a>
+        <a href="#ahorro" style="color:inherit" style-hover="color:#0f172a">Ahorro</a>
+      </div>
+      <a href="tel:9162494053" class="nav-cta" style="animation:zePop .7s cubic-bezier(.34,1.56,.64,1) .42s both;position:relative;display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:999px;border:1px solid transparent;background:linear-gradient(90deg,#2563eb,#a855f7);color:#fff;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;overflow:hidden;box-shadow:0 6px 18px rgba(124,58,237,.28);flex:none" style-hover="box-shadow:0 10px 26px rgba(168,85,247,.45)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a5f3fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Llámanos ahora
+      </a>
+    </nav>
+  </header>
+
+  <section id="top" class="hero-grid" style="position:relative;max-width:1240px;margin:0 auto;padding:78px 28px 40px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center">
+    <div class="hero-copy">
+      <div style="animation:zeDrop .9s cubic-bezier(.16,1,.3,1) .5s both;display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:999px;border:1px solid rgba(8,145,178,.32);background:rgba(34,211,238,.14);font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0e7490;margin-bottom:26px">
+        <span style="width:7px;height:7px;border-radius:50%;background:#06b6d4;box-shadow:0 0 12px rgba(6,182,212,.8)"></span>
+        Asesoría gratuita en español
+      </div>
+      <h1 style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(38px,5.1vw,72px);line-height:1.15;letter-spacing:0;margin:0 0 24px">
+        <span style="animation:zeReveal 1s cubic-bezier(.16,1,.3,1) .66s both;display:block;color:#101828">Mejor internet.</span>
+        <span style="animation:zeReveal 1s cubic-bezier(.16,1,.3,1) .8s both;display:block;background:linear-gradient(92deg,#22d3ee,#3b82f6 38%,#a855f7 68%,#e879f9);-webkit-background-clip:text;background-clip:text;color:transparent">Mejor vida.</span>
+      </h1>
+      <p style="animation:zeReveal .9s cubic-bezier(.16,1,.3,1) .96s both;max-width:470px;font-size:16.5px;line-height:1.65;color:#56637d;margin:0 0 30px;text-wrap:pretty">Te ayudamos a encontrar el plan de internet perfecto para tu hogar. Comparamos por ti, para que ahorres tiempo, dinero y te conectes sin límites.</p>
+      <div class="hero-badges" style="animation:zeReveal .9s cubic-bezier(.16,1,.3,1) 1.08s both;display:flex;flex-wrap:wrap;gap:22px;margin-bottom:32px">
+        <span style="display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#2f3b52"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Asesoría gratuita</span>
+        <span style="display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#2f3b52"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Sin compromiso</span>
+        <span style="display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:#2f3b52"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e879f9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Ahorra hasta $40/mes</span>
+      </div>
+      <div class="hero-search" style="animation:zeReveal .9s cubic-bezier(.16,1,.3,1) 1.2s both;display:flex;align-items:center;gap:10px;max-width:520px;padding:9px 9px 9px 20px;border-radius:999px;border:1px solid rgba(15,23,42,.12);background:#fff;box-shadow:0 12px 34px rgba(15,23,42,.09)">
+        <input value="{{ zip }}" onChange="{{ onZip }}" placeholder="Ingresa tu código ZIP" style="flex:1;min-width:0;border:0;outline:none;background:transparent;color:#101828;font-size:15px;padding:10px 0">
+        <button onClick="{{ onZipSubmit }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;border:0;cursor:pointer;padding:14px 24px;border-radius:999px;background:linear-gradient(92deg,#2563eb,#7c3aed);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;box-shadow:0 8px 30px rgba(79,70,229,.45);transition:transform .25s,box-shadow .25s" style-hover="transform:translateY(-2px);box-shadow:0 14px 40px rgba(124,58,237,.6)">
+          Ver planes disponibles
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </button>
+      </div>
+      <p style="animation:zeReveal .9s cubic-bezier(.16,1,.3,1) 1.32s both;margin:14px 0 0;font-size:11.5px;color:#6b7890;display:flex;align-items:center;gap:8px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6b7890" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>{{ zipNote }}</p>
+    </div>
+
+    <div class="hero-visual" style="position:relative;aspect-ratio:1/1;display:grid;place-items:center">
+      <div style="position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,rgba(59,130,246,.14),transparent 65%);filter:blur(18px);animation:breathe 8s ease-in-out infinite"></div>
+      <div style="position:absolute;inset:4%;border:1px solid rgba(8,145,178,.3);border-radius:50%;animation:orbit 26s linear infinite">
+        <span style="position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;background:#22d3ee;box-shadow:0 0 20px #22d3ee"></span>
+      </div>
+      <div style="position:absolute;inset:16%;border:1px dashed rgba(168,85,247,.28);border-radius:50%;animation:orbit 34s linear infinite reverse"></div>
+      <img src="uploads/pasted-1785974283735-0.png" alt="Hogar conectado" style="position:relative;width:104%;max-width:none;display:block;animation:zeBgSettle 1.7s cubic-bezier(.16,1,.3,1) .14s both, floaty 9s ease-in-out 1.9s infinite;filter:drop-shadow(0 30px 80px rgba(37,99,235,.45))">
     </div>
   </section>
 
-  <hr class="rule2" />
-
-  <section class="stats" aria-label="Takt, by the numbers">
-    <div class="grid">
-      <div><p class="stat-num">99.7%</p><p class="stat-label">Arrivals within three minutes</p></div>
-      <div><p class="stat-num">7,340</p><p class="stat-label">Departures orchestrated daily</p></div>
-      <div><p class="stat-num">60min</p><p class="stat-label">One pulse — the whole network breathes together</p></div>
-      <div><p class="stat-num">0</p><p class="stat-label">Excuses per annum</p></div>
+  <section id="proveedores" style="max-width:1240px;margin:0 auto;padding:22px 28px 70px">
+    <div data-reveal="" style="border:1px solid rgba(15,23,42,.08);background:#f6f8fc;border-radius:20px;padding:26px 0 30px;overflow:hidden">
+      <p style="margin:0 0 22px;text-align:center;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#6b7890">Trabajamos con los mejores proveedores</p>
+      <div style="display:flex;width:max-content;animation:marquee 26s linear infinite">
+        <div style="display:flex;align-items:center;gap:76px;padding-right:76px">
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-style:italic;font-size:26px;color:#ef4444;letter-spacing:-.02em">FRONTIER</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:26px;color:#334155">AT&amp;T</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;color:#334155">Spectrum</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;color:#334155;letter-spacing:-.03em">xfinity</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:26px;color:#334155;letter-spacing:.02em">DIRECTV</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:76px;padding-right:76px">
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-style:italic;font-size:26px;color:#ef4444;letter-spacing:-.02em">FRONTIER</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:26px;color:#334155">AT&amp;T</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;color:#334155">Spectrum</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:600;font-size:26px;color:#334155;letter-spacing:-.03em">xfinity</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:26px;color:#334155;letter-spacing:.02em">DIRECTV</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <hr class="rule2" />
-
-  <section class="features" id="product">
-    <span class="kicker">What Takt does</span>
-    <div class="feature">
-      <p class="f-num">01</p>
-      <h2 class="f-title">The clockface timetable</h2>
-      <p class="f-copy">Every service leaves at the same minute past every hour, all day, forever. Your riders stop reading timetables and start setting watches — the schedule becomes something the town simply knows.</p>
-    </div>
-    <div class="feature">
-      <p class="f-num">02</p>
-      <h2 class="f-title">Connections that hold</h2>
-      <p class="f-copy">Transfers are planned as promises: the branch line waits the full window, the mainline meets it to the second, and a missed connection is treated as what it is — an engineering defect.</p>
-    </div>
-    <div class="feature">
-      <p class="f-num">03</p>
-      <h2 class="f-title">Disruption, rerouted</h2>
-      <p class="f-copy">When the mountain sends snow, Takt already has the replacement plan published, the buses rolling, and the apology drafted in four languages. The 7:02 still leaves at 7:02 — from the next platform over.</p>
+  <section id="beneficios" style="max-width:1240px;margin:0 auto;padding:20px 28px 90px">
+    <h2 data-reveal="" style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(30px,3.4vw,44px);letter-spacing:0;line-height:1.25;text-align:center;margin:0 0 46px">¿Por qué <span style="background:linear-gradient(92deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent">elegir</span> nuestro servicio?</h2>
+    <div class="benefits-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px">
+      <div data-reveal="" style="position:relative;padding:30px 24px 32px;border-radius:18px;border:1px solid rgba(34,211,238,.4);background:linear-gradient(180deg,rgba(34,211,238,.07),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);border-color:rgba(34,211,238,.5);box-shadow:0 20px 50px rgba(34,211,238,.18)">
+        <div style="display:grid;place-items:center;width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(34,211,238,.5);background:rgba(34,211,238,.1);margin-bottom:22px;box-shadow:0 0 26px rgba(34,211,238,.3)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M14.5 9.2a2.6 2.6 0 0 0-2.5-1.7c-1.4 0-2.5.9-2.5 2s1 1.8 2.5 2.1 2.6 1 2.6 2.1-1.2 2-2.6 2a2.6 2.6 0 0 1-2.5-1.7M12 6v12"></path></svg>
+        </div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;margin:0 0 10px">Ahorra dinero</h3>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#5b6880">Encontramos los planes más económicos disponibles para ti.</p>
+      </div>
+      <div data-reveal="" style="position:relative;padding:30px 24px 32px;border-radius:18px;border:1px solid rgba(168,85,247,.35);background:linear-gradient(180deg,rgba(168,85,247,.07),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);border-color:rgba(168,85,247,.5);box-shadow:0 20px 50px rgba(168,85,247,.18)">
+        <div style="display:grid;place-items:center;width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(168,85,247,.5);background:rgba(168,85,247,.1);margin-bottom:22px;box-shadow:0 0 26px rgba(168,85,247,.3)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"></path></svg>
+        </div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;margin:0 0 10px">Instalación rápida</h3>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#5b6880">Procesos ágiles y sin complicaciones, del primer día.</p>
+      </div>
+      <div data-reveal="" style="position:relative;padding:30px 24px 32px;border-radius:18px;border:1px solid rgba(59,130,246,.35);background:linear-gradient(180deg,rgba(59,130,246,.08),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);border-color:rgba(59,130,246,.55);box-shadow:0 20px 50px rgba(59,130,246,.2)">
+        <div style="display:grid;place-items:center;width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(59,130,246,.55);background:rgba(59,130,246,.12);margin-bottom:22px;box-shadow:0 0 26px rgba(59,130,246,.32)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8z"></path></svg>
+        </div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;margin:0 0 10px">Promociones exclusivas</h3>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#5b6880">Accede a ofertas que no están publicadas en línea.</p>
+      </div>
+      <div data-reveal="" style="position:relative;padding:30px 24px 32px;border-radius:18px;border:1px solid rgba(232,121,249,.35);background:linear-gradient(180deg,rgba(232,121,249,.07),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s" style-hover="transform:translateY(-8px);border-color:rgba(232,121,249,.5);box-shadow:0 20px 50px rgba(232,121,249,.18)">
+        <div style="display:grid;place-items:center;width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(232,121,249,.5);background:rgba(232,121,249,.1);margin-bottom:22px;box-shadow:0 0 26px rgba(232,121,249,.28)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d946ef" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"></path><path d="M4 15a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 15a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2z"></path></svg>
+        </div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;margin:0 0 10px">Asesoría personalizada</h3>
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#5b6880">Te acompañamos en todo el proceso, en tu idioma.</p>
+      </div>
     </div>
   </section>
 
-  <section class="split" id="network">
-    <div class="split-copy">
-      <span class="kicker">The network</span>
-      <h2 class="split-title">Printed in black and white</h2>
-      <p class="note">Takt treats operations like the page treats photographs: no color where none is needed. The network map prints in ink on near-white, every line legible, and red spent on exactly one thing — the service that needs your attention now.</p>
+  <section id="planes" style="max-width:1240px;margin:0 auto;padding:0 28px 96px">
+    <h2 data-reveal="" style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(30px,3.4vw,44px);letter-spacing:0;line-height:1.25;text-align:center;margin:0 0 46px">Planes más <span style="background:linear-gradient(92deg,#a855f7,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent">populares</span> en tu área</h2>
+    <div class="plans-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start">
+
+      <div data-reveal="" style="position:relative;padding:34px 28px 30px;border-radius:20px;border:1px solid rgba(34,211,238,.45);background:linear-gradient(180deg,rgba(34,211,238,.08),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s" style-hover="transform:translateY(-10px);box-shadow:0 26px 70px rgba(34,211,238,.22)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:18px"><path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path></svg>
+        <div style="display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid rgba(8,145,178,.45);color:#0e7490;font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px">Básico</div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:36px;letter-spacing:-.03em;margin:0 0 10px">100 Mbps</h3>
+        <p style="margin:0 0 22px;font-size:14px;line-height:1.6;color:#5b6880">Ideal para navegar, redes sociales y streaming.</p>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:22px"><span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:44px;letter-spacing:-.04em">$65</span><span style="font-size:14px;color:#6b7890">/mes</span></div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px;font-size:14px;color:#3c4a63">
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Descarga rápida</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Hasta 5 dispositivos</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Sin contrato anual</span>
+        </div>
+        <a href="tel:9162494053" style="display:block;text-align:center;padding:14px;border-radius:999px;border:1px solid rgba(34,211,238,.5);background:rgba(34,211,238,.14);color:#0e7490;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase" style-hover="background:rgba(34,211,238,.28);color:#0c4a6e">Ver detalles</a>
+      </div>
+
+      
+
+      <div data-reveal="" class="plan-popular" style="position:relative;padding:40px 28px 30px;border-radius:20px;border:1.5px solid rgba(168,85,247,.55);background:linear-gradient(180deg,rgba(168,85,247,.12),#ffffff);box-shadow:0 26px 70px rgba(124,58,237,.18);transition:transform .35s cubic-bezier(.16,1,.3,1)" style-hover="transform:translateY(-12px)">
+        <div style="position:absolute;top:-15px;left:50%;transform:translateX(-50%);padding:8px 22px;border-radius:999px;background:linear-gradient(92deg,#7c3aed,#e879f9);font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;box-shadow:0 8px 26px rgba(168,85,247,.55)">Más popular</div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:18px"><path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path></svg>
+        <div style="display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid rgba(147,51,234,.45);color:#7e22ce;font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px">Ultra</div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:36px;letter-spacing:-.03em;margin:0 0 10px">300 Mbps</h3>
+        <p style="margin:0 0 22px;font-size:14px;line-height:1.6;color:#5b6880">Perfecto para hogares con varios dispositivos.</p>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:22px"><span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:44px;letter-spacing:-.04em">$75</span><span style="font-size:14px;color:#6b7890">/mes</span></div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px;font-size:14px;color:#3c4a63">
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Descarga ultra rápida</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Hasta 10 dispositivos</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Sin contrato anual</span>
+        </div>
+        <a href="tel:9162494053" style="display:block;text-align:center;padding:14px;border-radius:999px;background:linear-gradient(92deg,#7c3aed,#c026d3);color:#fff;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;box-shadow:0 10px 30px rgba(168,85,247,.45)" style-hover="color:#fff;box-shadow:0 16px 44px rgba(232,121,249,.6)">Ver detalles</a>
+      </div><div data-reveal="" style="position:relative;padding:34px 28px 30px;border-radius:20px;border:1px solid rgba(59,130,246,.4);background:linear-gradient(180deg,rgba(59,130,246,.1),#ffffff);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s" style-hover="transform:translateY(-10px);box-shadow:0 26px 70px rgba(59,130,246,.25)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:18px"><path d="M5 12.55a11 11 0 0 1 14.08 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path></svg>
+        <div style="display:inline-block;padding:5px 12px;border-radius:999px;border:1px solid rgba(37,99,235,.45);color:#1d4ed8;font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px">Máximo</div>
+        <h3 style="font-family:'Outfit',sans-serif;font-weight:800;font-size:36px;letter-spacing:-.03em;margin:0 0 10px">1000 Mbps</h3>
+        <p style="margin:0 0 22px;font-size:14px;line-height:1.6;color:#5b6880">La mejor velocidad para hogares conectados.</p>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:22px"><span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:44px;letter-spacing:-.04em">$95</span><span style="font-size:14px;color:#6b7890">/mes</span></div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px;font-size:14px;color:#3c4a63">
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Máxima velocidad</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Dispositivos ilimitados</span>
+          <span style="display:flex;gap:10px;align-items:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"></path></svg>Sin contrato anual</span>
+        </div>
+        <a href="tel:9162494053" style="display:block;text-align:center;padding:14px;border-radius:999px;border:1px solid rgba(96,165,250,.5);background:rgba(59,130,246,.12);color:#1d4ed8;font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase" style-hover="background:rgba(59,130,246,.2);color:#1e3a8a">Ver detalles</a>
+      </div>
     </div>
-    <figure class="split-figure grayscale">
-      <image-slot id="photo-split" shape="rect" src="assets/photo.jpg" role="img" aria-label="Product photograph printed in black and white"></image-slot>
-    </figure>
+    <p style="margin:28px 0 0;text-align:center;font-size:12px;color:#6b7890">Precios desde. Sujetos a disponibilidad en tu área.</p>
   </section>
 
-  <section class="quote">
-    <figure>
-      <!-- keep the leading “ — the blockquote's negative text-indent hangs it in the margin -->
-      <blockquote>“Twenty years dispatching and I have stopped checking the board. If Takt says the 7:02, it is the 7:02.”</blockquote>
-      <!-- keep the leading "— " — the figcaption's negative text-indent hangs it -->
-      <figcaption>— A. Keller, dispatcher, Olten</figcaption>
-    </figure>
+  <section id="pasos" style="position:relative;padding:90px 0;border-top:1px solid rgba(15,23,42,.08);border-bottom:1px solid rgba(15,23,42,.08);background:linear-gradient(180deg,rgba(124,58,237,.05),transparent 60%)">
+    <div style="max-width:1100px;margin:0 auto;padding:0 28px">
+      <h2 data-reveal="" style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(30px,3.4vw,44px);letter-spacing:0;line-height:1.25;text-align:center;margin:0 0 60px;line-height:1.1">Tu nuevo internet<br>en <span style="background:linear-gradient(92deg,#22d3ee,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent">3 simples pasos</span></h2>
+      <div class="steps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative">
+        <div class="steps-line" style="position:absolute;top:38px;left:16%;right:16%;height:2px;background:linear-gradient(90deg,#22d3ee,#7c3aed,#e879f9);opacity:.5"></div>
+        <div data-reveal="" style="position:relative;text-align:center">
+          <div style="position:relative;display:grid;place-items:center;width:76px;height:76px;margin:0 auto 22px;border-radius:50%;border:2px solid #06b6d4;background:#ffffff;box-shadow:0 0 34px rgba(34,211,238,.45)">
+            <span style="position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(34,211,238,.7);animation:pulsering 2.6s ease-out infinite"></span>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          </div>
+          <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;margin:0 0 10px">1. Llámanos</h3>
+          <p style="margin:0 auto;max-width:250px;font-size:14px;line-height:1.6;color:#5b6880">Cuéntanos qué necesitas y cuál es tu servicio actual.</p>
+        </div>
+        <div data-reveal="" style="position:relative;text-align:center">
+          <div style="position:relative;display:grid;place-items:center;width:76px;height:76px;margin:0 auto 22px;border-radius:50%;border:2px solid #a855f7;background:#ffffff;box-shadow:0 0 34px rgba(168,85,247,.45)">
+            <span style="position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(168,85,247,.7);animation:pulsering 2.6s ease-out infinite .8s"></span>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+          </div>
+          <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;margin:0 0 10px">2. Comparamos</h3>
+          <p style="margin:0 auto;max-width:250px;font-size:14px;line-height:1.6;color:#5b6880">Analizamos las mejores opciones disponibles en tu área.</p>
+        </div>
+        <div data-reveal="" style="position:relative;text-align:center">
+          <div style="position:relative;display:grid;place-items:center;width:76px;height:76px;margin:0 auto 22px;border-radius:50%;border:2px solid #d946ef;background:#ffffff;box-shadow:0 0 34px rgba(232,121,249,.45)">
+            <span style="position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(232,121,249,.7);animation:pulsering 2.6s ease-out infinite 1.6s"></span>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d946ef" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 13 5 5L20 6"></path></svg>
+          </div>
+          <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:17px;margin:0 0 10px">3. Eliges y ahorras</h3>
+          <p style="margin:0 auto;max-width:250px;font-size:14px;line-height:1.6;color:#5b6880">Tú decides y nosotros te ayudamos con el cambio.</p>
+        </div>
+      </div>
+
+      <div data-reveal="" class="pasos-cta" style="margin-top:58px;display:flex;align-items:center;gap:26px;padding:26px 32px;border-radius:20px;border:1px solid rgba(34,211,238,.28);background:linear-gradient(92deg,rgba(8,15,30,.9),rgba(20,10,40,.9))">
+        <div style="position:relative;display:grid;place-items:center;width:64px;height:64px;flex:none;border-radius:50%;border:2px solid rgba(34,211,238,.6);box-shadow:0 0 30px rgba(34,211,238,.4)">
+          <span style="position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(34,211,238,.6);animation:pulsering 2.2s ease-out infinite"></span>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        </div>
+        <div style="flex:1">
+          <h3 style="font-family:'Outfit',sans-serif;font-weight:700;font-size:20px;margin:0 0 6px;color:#ffffff">¿Prefieres hablar ahora?</h3>
+          <p style="margin:0;font-size:14px;color:#5b6880">Nuestros asesores están listos para ayudarte.</p>
+        </div>
+        <a href="tel:9162494053" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;color:#e879f9;white-space:nowrap" style-hover="color:#22d3ee">(916) 249-4053</a>
+      </div>
+    </div>
   </section>
 
+  <section id="ahorro" style="max-width:1240px;margin:0 auto;padding:90px 28px">
+    <h2 data-reveal="" style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(30px,3.4vw,44px);letter-spacing:0;line-height:1.25;text-align:center;margin:0 0 12px">¿Cuánto podrías <span style="background:linear-gradient(92deg,#e879f9,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent">ahorrar</span>?</h2>
+    <p data-reveal="" style="text-align:center;color:#6b7890;font-size:15px;margin:0 0 52px">Calcula tu ahorro potencial en segundos</p>
+    <div class="ahorro-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+      <div data-reveal="" style="display:grid;place-items:center;position:relative">
+        <svg width="330" height="330" viewBox="0 0 260 260" style="max-width:100%">
+          <defs>
+            <linearGradient id="gaugegrad" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0%" stop-color="#e879f9"></stop>
+              <stop offset="50%" stop-color="#7c3aed"></stop>
+              <stop offset="100%" stop-color="#22d3ee"></stop>
+            </linearGradient>
+          </defs>
+          <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(15,23,42,.1)" stroke-width="20" stroke-linecap="round" stroke-dasharray="440 629" transform="rotate(144 130 130)"></circle>
+          <circle cx="130" cy="130" r="100" fill="none" stroke="url(#gaugegrad)" stroke-width="20" stroke-linecap="round" stroke-dasharray="{{ gaugeDash }}" transform="rotate(144 130 130)" style="transition:stroke-dasharray .7s cubic-bezier(.16,1,.3,1);filter:drop-shadow(0 0 14px rgba(124,58,237,.7))"></circle>
+        </svg>
+        <div style="position:absolute;display:grid;place-items:center;text-align:center">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#6b7890">Hasta</span>
+          <span style="font-family:'Outfit',sans-serif;font-weight:800;font-size:64px;letter-spacing:-.05em;line-height:1;margin:6px 0 2px">{{ savingsLabel }}</span>
+          <span style="font-size:14px;color:#6b7890">/mes</span>
+        </div>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:20px">
+        <div style="padding:24px;border-radius:18px;border:1px solid rgba(15,23,42,.1);background:#f6f8fc">
+          <label style="display:block;font-size:12.5px;font-weight:600;color:#6b7890;margin-bottom:10px">¿Cuánto pagas actualmente?</label>
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid rgba(15,23,42,.12);background:#ffffff">
+            <span style="color:#0891b2;font-weight:700">$</span>
+            <input type="range" min="40" max="180" step="1" value="{{ pay }}" onChange="{{ onPay }}" onInput="{{ onPay }}" style="flex:1;accent-color:#a855f7;background:transparent">
+            <span style="font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;min-width:52px;text-align:right">{{ payLabel }}</span>
+            <span style="font-size:12px;color:#6b7890">/mes</span>
+          </div>
+        </div>
+        <div style="padding:24px;border-radius:18px;border:1px solid rgba(15,23,42,.1);background:#f6f8fc">
+          <label style="display:block;font-size:12.5px;font-weight:600;color:#6b7890;margin-bottom:10px">Velocidad actual</label>
+          <select value="{{ speed }}" onChange="{{ onSpeed }}" style="width:100%;padding:13px 16px;border-radius:12px;border:1px solid rgba(15,23,42,.12);background:#ffffff;color:#101828;font-size:14.5px;outline:none">
+            <option value="100">100 Mbps</option>
+            <option value="300">300 Mbps</option>
+            <option value="500">500 Mbps</option>
+            <option value="1000">1000 Mbps</option>
+          </select>
+        </div>
+        <div style="position:relative;overflow:hidden;padding:26px;border-radius:18px;background:linear-gradient(92deg,#2563eb,#7c3aed 55%,#d946ef);box-shadow:0 20px 60px rgba(124,58,237,.4)">
+          <span style="position:absolute;top:0;left:0;width:35%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);animation:sweep 4.5s ease-in-out infinite"></span>
+          <p style="position:relative;margin:0 0 6px;font-size:13px;font-weight:600;color:rgba(255,255,255,.85)">Podrías ahorrar hasta</p>
+          <p style="position:relative;margin:0 0 4px;font-family:'Outfit',sans-serif;font-weight:800;font-size:46px;letter-spacing:-.04em;line-height:1">{{ savingsLabel }}<span style="font-size:16px;font-weight:600;letter-spacing:0"> /mes</span></p>
+          <p style="position:relative;margin:0;font-size:13px;color:rgba(255,255,255,.8)">{{ savingsNote }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1240px;margin:0 auto;padding:0 28px 90px">
+    <div data-reveal="" class="final-cta" style="position:relative;overflow:hidden;display:flex;align-items:center;gap:30px;padding:44px 46px;border-radius:24px;background:linear-gradient(100deg,#071023,#1a0b3d 55%,#3b0d52);border:1px solid rgba(168,85,247,.35)">
+      <span style="position:absolute;top:0;left:0;width:30%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.13),transparent);animation:sweep 6s ease-in-out infinite"></span>
+      <div style="position:relative;display:grid;place-items:center;width:82px;height:82px;flex:none;border-radius:50%;border:2px solid rgba(34,211,238,.7);box-shadow:0 0 40px rgba(34,211,238,.5)">
+        <span style="position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(34,211,238,.6);animation:pulsering 2.4s ease-out infinite"></span>
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#22d3ee" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      </div>
+      <div style="position:relative;flex:1">
+        <h2 style="font-family:'Kaushan Script',cursive;font-weight:400;font-size:clamp(24px,2.5vw,34px);letter-spacing:0;line-height:1.25;margin:0 0 8px;color:#ffffff">¿Listo para mejorar tu internet?</h2>
+        <p style="margin:0;font-size:15px;color:#b3bdd4">Contáctanos hoy y recibe asesoría gratuita sin compromiso.</p>
+      </div>
+      <a href="tel:9162494053" style="position:relative;display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:999px;background:linear-gradient(92deg,#7c3aed,#d946ef);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;box-shadow:0 12px 36px rgba(168,85,247,.5);transition:transform .25s" style-hover="transform:translateY(-2px);color:#fff">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Llámanos ahora
+      </a>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(15,23,42,.08);background:#f6f8fc">
+    <div class="footer-grid" style="max-width:1240px;margin:0 auto;padding:56px 28px 40px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1.2fr;gap:36px">
+      <div>
+        <img src="uploads/pasted-1785974510057-0.png" alt="Connecting" style="height:46px;width:auto;display:block;margin-bottom:18px">
+        <p style="margin:0 0 20px;font-size:13.5px;line-height:1.65;color:#6b7890;max-width:260px">Te ayudamos a encontrar el mejor plan de internet para tu hogar. Asesoría gratuita, clara y sin compromiso.</p>
+      </div>
+      <div>
+        <h4 style="font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#0e7490;margin:0 0 18px">Navegación</h4>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#6b7890">
+          <a href="#top" style="color:inherit" style-hover="color:#0f172a">Inicio</a>
+          <a href="#planes" style="color:inherit" style-hover="color:#0f172a">Planes</a>
+          <a href="#proveedores" style="color:inherit" style-hover="color:#0f172a">Proveedores</a>
+          <a href="#pasos" style="color:inherit" style-hover="color:#0f172a">Cómo funciona</a>
+          <a href="#ahorro" style="color:inherit" style-hover="color:#0f172a">Calculadora</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#7c3aed;margin:0 0 18px">Proveedores</h4>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#6b7890">
+          <span>Frontier</span><span>AT&amp;T</span><span>Spectrum</span><span>Xfinity</span><span>DIRECTV</span>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#c026d3;margin:0 0 18px">Legal</h4>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#6b7890">
+          <a href="#top" style="color:inherit" style-hover="color:#0f172a">Aviso de privacidad</a>
+          <a href="#top" style="color:inherit" style-hover="color:#0f172a">Términos y condiciones</a>
+          <a href="#top" style="color:inherit" style-hover="color:#0f172a">Política de cookies</a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#2563eb;margin:0 0 18px">Contáctanos</h4>
+        <div style="display:flex;flex-direction:column;gap:11px;font-size:13.5px;color:#6b7890">
+          <a href="tel:9162494053" style="color:#101828;font-weight:700">(916) 249-4053</a>
+          <a href="mailto:info@connecting.com" style="color:inherit" style-hover="color:#0f172a">info@connecting.com</a>
+          <span>Lun – Vie 8:00 AM – 8:00 PM</span>
+          <span>Sáb 9:00 AM – 3:00 PM</span>
+          <span>Atención en español</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1240px;margin:0 auto;padding:20px 28px 40px;border-top:1px solid rgba(15,23,42,.08);display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#6b7890">
+      <span>© 2026 Connecting Internet Advisors. Todos los derechos reservados.</span>
+      <span>Hecho para hogares conectados.</span>
+    </div>
+  </footer>
 </div>
 
-<section class="close" id="start">
-  <div class="wrap">
-    <h3><span class="line">Set your watch by it.</span></h3>
-    <div class="row">
-      <button type="button" class="btn btn-ghost">Start free — first month on us</button>
-    </div>
-  </div>
-</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280}}">
+const BASE = { 100: 65, 300: 75, 500: 85, 1000: 95 };
+const TESTIMONIALS = [
+  { name: 'María G.', initials: 'MG', city: 'Los Angeles, CA', rating: 5, quote: '"Me ayudaron a encontrar un plan mejor y más barato. La asesoría fue súper rápida y clara."' },
+  { name: 'Juan R.', initials: 'JR', city: 'San Diego, CA', rating: 4, quote: '"En 10 minutos me mostraron opciones que yo no conocía. Ahora pago mucho menos."' },
+  { name: 'Carlos M.', initials: 'CM', city: 'Phoenix, AZ', rating: 5, quote: '"La instalación fue muy rápida y el servicio al cliente excelente."' },
+  { name: 'Lucía P.', initials: 'LP', city: 'Sacramento, CA', rating: 5, quote: '"Nos cambiaron de proveedor sin complicaciones y ahorramos $35 cada mes."' },
+  { name: 'Diego A.', initials: 'DA', city: 'Las Vegas, NV', rating: 5, quote: '"Todo en español y sin presión para comprar. Justo lo que necesitaba."' }
+];
 
-<div class="wrap">
-  <footer>Built from this project’s theme.json — see readme.md.</footer>
-</div>
-<script src="image-slot.js"></script>
-<script>
-// Review aid: baseline-grid overlay — add ?baselines to the URL, or press B to toggle.
-(() => {
-  if (new URLSearchParams(location.search).has('baselines')) document.body.setAttribute('data-baselines', '');
-  addEventListener('keydown', (e) => {
-    const t = e.target;
-    if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
-    if ((e.key === 'b' || e.key === 'B') && !e.metaKey && !e.ctrlKey && !e.altKey) document.body.toggleAttribute('data-baselines');
-  });
-})();
+class Component extends DCLogic {
+  state = { zip: '', zipNote: 'Este formulario es 100% seguro. No compartimos tu información.', pay: 95, speed: '100', ti: 0 };
+
+  componentDidMount() {
+    const els = Array.from(this.el ? this.el.querySelectorAll('[data-reveal]') : document.querySelectorAll('[data-reveal]'));
+    els.forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(26px)';
+      el.style.transition = 'opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1)';
+      el.style.transitionDelay = (i % 4) * 0.09 + 's';
+    });
+    const show = el => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    let pending = els.slice();
+    const sweep = () => {
+      pending = pending.filter(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight - 40 && r.bottom > 0) { show(el); return false; }
+        return true;
+      });
+    };
+    let queued = false;
+    this._onScroll = () => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; sweep(); }); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    requestAnimationFrame(sweep);
+    this._fallback = setTimeout(() => els.forEach(show), 2500);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this._fallback);
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+  }
+
+  stars(n) {
+    return Array.from({ length: 5 }, (_, i) =>
+      React.createElement('svg', { key: i, width: 15, height: 15, viewBox: '0 0 24 24', fill: i < n ? '#22d3ee' : 'rgba(255,255,255,.16)' },
+        React.createElement('path', { d: 'm12 3 2.6 5.6 6.1.8-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6L3.3 9.4l6.1-.8z' })));
+  }
+
+  renderVals() {
+    const pay = Number(this.state.pay);
+    const base = BASE[this.state.speed] || 65;
+    const savings = Math.max(0, Math.min(60, Math.round(pay - base)));
+    const pct = savings / 60;
+    const list = TESTIMONIALS;
+    const visibleT = [0, 1, 2].map(k => {
+      const t = list[(this.state.ti + k) % list.length];
+      return Object.assign({}, t, { stars: this.stars(t.rating) });
+    });
+    return {
+      zip: this.state.zip,
+      zipNote: this.state.zipNote,
+      onZip: e => this.setState({ zip: e.target.value }),
+      onZipSubmit: () => {
+        const ok = /^\d{5}$/.test(this.state.zip.trim());
+        this.setState({ zipNote: ok ? 'Buscando planes disponibles en ' + this.state.zip.trim() + '… te llamamos en minutos.' : 'Ingresa un código ZIP de 5 dígitos para ver planes en tu área.' });
+        if (ok) document.getElementById('planes').scrollIntoView ? window.scrollTo({ top: document.getElementById('planes').offsetTop - 80, behavior: 'smooth' }) : null;
+      },
+      pay: String(pay),
+      payLabel: '$' + pay,
+      speed: this.state.speed,
+      onPay: e => this.setState({ pay: Number(e.target.value) }),
+      onSpeed: e => this.setState({ speed: e.target.value }),
+      savingsLabel: '$' + savings,
+      savingsNote: savings > 0 ? 'Con un mejor plan de ' + this.state.speed + ' Mbps' : 'Ya tienes un precio competitivo. Llámanos y lo confirmamos.',
+      gaugeDash: (440 * pct).toFixed(1) + ' 629',
+      visibleT,
+      prevT: () => this.setState(s => ({ ti: (s.ti - 1 + list.length) % list.length })),
+      nextT: () => this.setState(s => ({ ti: (s.ti + 1) % list.length }))
+    };
+  }
+}
+
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1c110edac9450bc',t:'MTc4NDIwNTUyOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
