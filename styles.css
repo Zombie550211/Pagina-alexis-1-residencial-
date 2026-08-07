@@ -1,21 +1,18 @@
 html { scroll-behavior: smooth; }
-body { margin:0; background:#ffffff; color:#1b2233; font-family:'Plus Jakarta Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+body { margin:0; background:#faf6ef; color:#17140f; font-family:'Plus Jakarta Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 a { color:#0e7490; text-decoration:none; }
 a:hover { color:#a21caf; }
-::selection { background:#7c3aed; color:#fff; }
+::selection { background:#141210; color:#fff490; }
 input, select, button { font-family:inherit; }
 @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
 @keyframes floaty2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(12px)} }
-@keyframes breathe { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:.85;transform:scale(1.06)} }
 @keyframes orbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-@keyframes sweep { 0%{transform:translateX(-120%)} 60%,100%{transform:translateX(220%)} }
 @keyframes zeReveal { from{opacity:0;transform:translateY(26px) scale(.985);filter:blur(7px)} to{opacity:1;transform:none;filter:blur(0)} }
 @keyframes zeDrop { from{opacity:0;transform:translateY(-16px) scale(.9)} to{opacity:1;transform:none} }
 @keyframes zeBgSettle { from{opacity:0;transform:scale(1.12)} to{opacity:1;transform:scale(1)} }
 @keyframes zePop { 0%{opacity:0;transform:translateY(8px) scale(.78)} 70%{opacity:1;transform:scale(1.07)} 100%{opacity:1;transform:scale(1)} }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.001ms !important; animation-delay:0ms !important; transition-duration:.001ms !important } }
-@keyframes pulsering { 0%{transform:scale(.9);opacity:.7} 100%{transform:scale(1.7);opacity:0} }
 
 @media (max-width: 960px) {
   .nav-links { display:none !important; }
@@ -44,8 +41,10 @@ input, select, button { font-family:inherit; }
   .hero-search { flex-direction:column !important; border-radius:20px !important; padding:14px !important; }
   .hero-search input { width:100% !important; text-align:center !important; padding:6px 0 !important; }
   .hero-search button { width:100% !important; justify-content:center !important; }
-  .footer-grid { grid-template-columns:1fr !important; text-align:center !important; }
-  .footer-grid > div { margin:0 auto; }
+  .footer-grid { grid-template-columns:1fr 1fr !important; text-align:left !important; gap:30px 20px !important; }
+  .footer-grid > div:first-child { grid-column:1 / -1; }
+  .footer-grid > div { margin:0; }
+  .footer-grid p { margin-left:0; margin-right:0; }
   .footer-bottom { flex-direction:column !important; text-align:center !important; gap:8px !important; }
 }
 
