@@ -1,0 +1,56 @@
+html { scroll-behavior: smooth; }
+body { margin:0; background:#ffffff; color:#1b2233; font-family:'Plus Jakarta Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:#0e7490; text-decoration:none; }
+a:hover { color:#a21caf; }
+::selection { background:#7c3aed; color:#fff; }
+input, select, button { font-family:inherit; }
+@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+@keyframes floaty2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(12px)} }
+@keyframes breathe { 0%,100%{opacity:.45;transform:scale(1)} 50%{opacity:.85;transform:scale(1.06)} }
+@keyframes orbit { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes sweep { 0%{transform:translateX(-120%)} 60%,100%{transform:translateX(220%)} }
+@keyframes zeReveal { from{opacity:0;transform:translateY(26px) scale(.985);filter:blur(7px)} to{opacity:1;transform:none;filter:blur(0)} }
+@keyframes zeDrop { from{opacity:0;transform:translateY(-16px) scale(.9)} to{opacity:1;transform:none} }
+@keyframes zeBgSettle { from{opacity:0;transform:scale(1.12)} to{opacity:1;transform:scale(1)} }
+@keyframes zePop { 0%{opacity:0;transform:translateY(8px) scale(.78)} 70%{opacity:1;transform:scale(1.07)} 100%{opacity:1;transform:scale(1)} }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.001ms !important; animation-delay:0ms !important; transition-duration:.001ms !important } }
+@keyframes pulsering { 0%{transform:scale(.9);opacity:.7} 100%{transform:scale(1.7);opacity:0} }
+
+@media (max-width: 960px) {
+  .nav-links { display:none !important; }
+  .hero-grid { grid-template-columns:1fr !important; padding:56px 24px 36px !important; gap:34px !important; text-align:center !important; }
+  .hero-grid .hero-copy { margin:0 auto; }
+  .hero-grid .hero-badges { justify-content:center !important; }
+  .hero-grid .hero-visual { max-width:380px; margin:0 auto; }
+  .hero-search { max-width:520px; margin-left:auto !important; margin-right:auto !important; }
+  .benefits-grid { grid-template-columns:repeat(2,1fr) !important; }
+  .plans-grid { grid-template-columns:1fr !important; max-width:440px !important; margin-left:auto !important; margin-right:auto !important; }
+  .plan-popular { margin-top:26px !important; }
+  .steps-grid { grid-template-columns:1fr !important; gap:44px !important; }
+  .steps-line { display:none !important; }
+  .ahorro-grid { grid-template-columns:1fr !important; gap:40px !important; }
+  .footer-grid { grid-template-columns:1fr 1fr !important; }
+}
+
+@media (max-width: 640px) {
+  section { padding-left:20px !important; padding-right:20px !important; }
+  .site-nav { padding:14px 18px !important; gap:14px !important; }
+  .benefits-grid { grid-template-columns:1fr !important; }
+  .pasos-cta { flex-direction:column !important; text-align:center !important; gap:16px !important; }
+  .pasos-cta a { font-size:22px !important; }
+  .final-cta { flex-direction:column !important; text-align:center !important; padding:34px 26px !important; }
+  .final-cta a[href^="tel"] { width:100% !important; justify-content:center !important; }
+  .hero-search { flex-direction:column !important; border-radius:20px !important; padding:14px !important; }
+  .hero-search input { width:100% !important; text-align:center !important; padding:6px 0 !important; }
+  .hero-search button { width:100% !important; justify-content:center !important; }
+  .footer-grid { grid-template-columns:1fr !important; text-align:center !important; }
+  .footer-grid > div { margin:0 auto; }
+  .footer-bottom { flex-direction:column !important; text-align:center !important; gap:8px !important; }
+}
+
+@media (max-width: 420px) {
+  .site-nav img { height:36px !important; }
+  .nav-cta { padding:9px 14px !important; font-size:10.5px !important; gap:6px !important; }
+  .floating-cta { padding:15px 24px !important; font-size:11.5px !important; letter-spacing:.08em !important; gap:8px !important; bottom:16px !important; }
+}
